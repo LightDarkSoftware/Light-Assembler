@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <algorithm>
+#include <filesystem>
 
 const std::unordered_set<std::string> mnemonics = {"MOVE", "ADD", "SUB", "INT", "DC", "TIMES", "PUSHA", "POPA", "CLI", "STI", "HLT"};
 const std::unordered_set<std::string> mnemTypes = {"B", "W", "L", "Q"};
@@ -362,7 +363,10 @@ void compileAssembly(const std::string& filename) {
             return;
         }
     }
-    saveToFile("test.bin", buffer);
+    std::filesystem::path p(filename);
+    p.replace_extension(".bin");
+    std::string compiled_filename = p.string();
+    saveToFile(compiled_filename, buffer);
 }
 
 int main(int argc, char* argv[]) {
